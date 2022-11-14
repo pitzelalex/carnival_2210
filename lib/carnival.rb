@@ -26,4 +26,10 @@ class Carnival
     end
     max_profit.first
   end
+
+  def total_revenue
+    @rides.sum do |ride|
+      ride.total_revenue
+    end
+  end
 end
