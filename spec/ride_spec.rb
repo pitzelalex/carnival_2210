@@ -74,4 +74,21 @@ describe Ride do
       expect(ride.rider_log).to eq({visitor1 => 2})
     end
   end
+
+  describe '#ridden_count' do
+    it 'returns the number of times the ride has been ridden' do
+      ride = Ride.new({ name: 'Carousel', min_height: 24, admission_fee: 1, excitement: :gentle })
+      visitor1 = Visitor.new('Bruce', 54, '$10')
+      visitor2 = Visitor.new('Tucker', 36, '$5')
+      visitor1.add_preference(:gentle)
+      visitor2.add_preference(:gentle)
+
+      ride.log_rider(visitor1)
+      expect(ride.ridden_count).to eq(1)
+      ride.log_rider(visitor2)
+      expect(ride.ridden_count).to eq(2)
+      ride.log_rider(visitor1)
+      expect(ride.ridden_count).to eq(3)
+    end
+  end
 end

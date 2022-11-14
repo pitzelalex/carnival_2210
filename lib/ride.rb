@@ -31,4 +31,9 @@ class Ride
     @rider_log[visitor] ||= 0
     @rider_log[visitor] += 1
   end
+
+  def ridden_count
+    return 0 if @rider_log == {}
+    @rider_log.values.sum
+  end
 end
