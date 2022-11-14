@@ -10,4 +10,8 @@ class Visitor
     @spending_money = money[1..].to_i
     @preferences = []
   end
+
+  def add_preference(pref)
+    @preferences.push(pref)
+  end
 end
