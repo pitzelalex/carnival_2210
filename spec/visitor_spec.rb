@@ -37,4 +37,15 @@ describe Visitor do
       expect(visitor1.tall_enough?(64)).to be false
     end
   end
+
+  describe '#spend_money' do
+    it 'removes money from @spending_money' do
+      visitor1 = Visitor.new('Bruce', 54, '$10')
+
+      visitor1.spend_money(1)
+      expect(visitor1.spending_money).to eq(9)
+      visitor1.spend_money(3)
+      expect(visitor1.spending_money).to eq(6)
+    end
+  end
 end

@@ -36,4 +36,42 @@ describe Ride do
       expect(ride.would_ride?(visitor4)).to be false
     end
   end
+
+  describe '#board_rider' do
+    it 'tracks that the rider rode the ride' do
+      ride = Ride.new({ name: 'Carousel', min_height: 24, admission_fee: 1, excitement: :gentle })
+      visitor1 = Visitor.new('Bruce', 54, '$10')
+      visitor1.add_preference(:gentle)
+      visitor1.add_preference(:water)
+      visitor2 = Visitor.new('Tucker', 36, '$5')
+      visitor2.add_preference(:water)
+
+      ride.board_rider(visitor1)
+      ride.board_rider(visitor2)
+
+      expect(ride.rider_log).to eq({visitor1 => 1})
+      expect(visitor1.spending_money).to eq(9)
+      expect(visitor2.spending_money).to eq(5)
+      expect(ride.total_revenue).to eq(1)
+
+      ride.board_rider(visitor1)
+
+      expect(ride.rider_log).to eq({visitor1 => 2})
+      expect(visitor1.spending_money).to eq(8)
+      expect(ride.total_revenue).to eq(2)
+    end
+  end
+
+  describe '#log_rider' do
+    it 'adds the rider to the @rider_log' do
+      ride = Ride.new({ name: 'Carousel', min_height: 24, admission_fee: 1, excitement: :gentle })
+      visitor1 = Visitor.new('Bruce', 54, '$10')
+
+      expect(ride.rider_log).to eq({})
+      ride.log_rider(visitor1)
+      expect(ride.rider_log).to eq({visitor1 => 1})
+      ride.log_rider(visitor1)
+      expect(ride.rider_log).to eq({visitor1 => 2})
+    end
+  end
 end
