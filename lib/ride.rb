@@ -15,5 +15,7 @@ class Ride
     @rider_log = {}
   end
 
-  
+  def would_ride?(visitor)
+    visitor.tall_enough?(@min_height) && visitor.preferences.include?(@excitement)
+  end
 end

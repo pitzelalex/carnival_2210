@@ -16,4 +16,24 @@ describe Ride do
       expect(ride.rider_log).to eq({})
     end
   end
+
+  describe '#would_ride?' do
+    it 'checks if a rider would board the ride' do
+      ride = Ride.new({ name: 'Carousel', min_height: 24, admission_fee: 1, excitement: :gentle })
+      visitor1 = Visitor.new('Bruce', 54, '$10')
+      visitor1.add_preference(:gentle)
+      visitor1.add_preference(:water)
+      visitor2 = Visitor.new('Tucker', 36, '$5')
+      visitor2.add_preference(:water)
+      visitor3 = Visitor.new('Penny', 64, '$15')
+      visitor3.add_preference(:gentle)
+      visitor4 = Visitor.new('Penny', 23, '$15')
+      visitor4.add_preference(:gentle)
+
+      expect(ride.would_ride?(visitor1)).to be true
+      expect(ride.would_ride?(visitor2)).to be false
+      expect(ride.would_ride?(visitor3)).to be true
+      expect(ride.would_ride?(visitor4)).to be false
+    end
+  end
 end
